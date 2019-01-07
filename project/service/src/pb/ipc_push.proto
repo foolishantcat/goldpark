@@ -1,0 +1,73 @@
+package protol;
+
+message DevStat{
+  	required int64 duid = 1;
+    required int64 last_msg_id=2;
+}
+
+message DevOffline{
+	required int64 duid = 1;
+}
+
+message DevOnline{
+	required int64 duid = 1;
+	required int64 last_msg_id = 2;
+}
+
+message DevsAlive{
+  	repeated DevStat dev_online = 1;
+  	required int32 net_time_sec = 2;
+}
+
+message DataOccur{
+  	required int64 duid = 1;
+}
+
+message DataReq{
+	required int64 duid=1;
+	required int64 lat_msg_id=2;
+}
+
+// “ipc.server_occur”
+message SvrOccurReq{
+    required int64 duid=1;
+}
+
+message SvrOccurRes{
+   required int64 result=1;
+}
+
+message DataRes{
+   	required int64 from_duid=1;
+   	required int64 msg_id=2;
+   	required bytes msg_data=3;
+}
+
+message DataResBatchs{
+   	repeated DataRes data_batchs=1;
+}
+
+// 外部调用rpc协议
+// 推送给设备的信息
+message PushDeviceReq{
+	required int64 from_duid=1;
+  	required int64 to_duid = 2;
+  	required bytes msg_data = 3;
+	required int32 expire_time=4;
+	optional int32 req_id = 5; // 用来回传,便于异步操作
+}
+
+// 返回的结果
+message PushDeviceRes{
+	required int32 result = 1;
+	optional int32 req_id = 2;
+}
+
+// 批量推送设备的消息
+message PushDevBatchsReq{
+  	repeated PushDeviceReq batchs = 1;
+}
+
+message PushDevBatchsRes{
+  	repeated PushDeviceRes batchs_result = 1;
+}
