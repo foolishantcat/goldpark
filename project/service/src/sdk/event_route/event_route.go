@@ -80,7 +80,7 @@ func (this *EventRouteMgr) SyncHandle(route_id int, event *EventMsg, wait_time i
     
     // 等待处理完毕
 	go func() {
-		time.Sleep(time.Duration(wait_time) * time.Microsecond)
+		time.Sleep(time.Duration(wait_time) * time.Millisecond)
         this.log.LogSysError("Waiting TimeOut,dispatchId:%d", index)
 		time_channel <- 1
 	}()
